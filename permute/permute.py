@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Generator, List, Optional, Set
 
 
 def permutation_amount(alphabet_n: int) -> int:
@@ -16,9 +16,31 @@ def permutation_amount(alphabet_n: int) -> int:
     return x
 
 
+def create_permutation(words: Set[str]) -> Generator[str, None, None]:
+    yield from words
+
+    word_n = len(words)
+
+    if word_n <= 1:
+        return
+
+    if word_n == 2:
+        for word in words:
+            for other_word in words - set([word]):
+                yield word + other_word
+        return
+
+    for word in words:
+        for combined_word in create_permutation(words - set([word])):
+            yield word + combined_word
+
+
 class Permute:
-    def __init__(self, words: Set[str]):
-        self.words = words
+    def __init__(self, words: List[str]):
+        self.words: Set[str] = set(words)
+
+    def create_generator(self) -> Generator[str, None, None]:
+        return create_permutation(self.words)
 
     def amount(self) -> int:
         return permutation_amount(len(self.words))

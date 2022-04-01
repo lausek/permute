@@ -2,27 +2,33 @@ from permute import Permute, permutation_amount
 
 
 def test_amount_no_words():
-    words = set([])
+    words = []
     permute = Permute(words)
     assert 0 == permute.amount()
 
 
 def test_amount_one_word():
-    words = set(["a"])
+    words = ["a"]
     permute = Permute(words)
     assert 1 == permute.amount()
 
 
 def test_amount_two_words():
-    words = set(["a", "b"])
+    words = ["a", "b"]
     permute = Permute(words)
     assert 4 == permute.amount()
 
 
 def test_amount_three_words():
-    words = set(["a", "b", "c"])
+    words = ["a", "b", "c"]
     permute = Permute(words)
     assert 15 == permute.amount()
+
+
+def test_only_unique_words_added():
+    words = ["b", "b"]
+    permute = Permute(words)
+    assert 1 == permute.amount()
 
 
 def test_permutation_computation():
