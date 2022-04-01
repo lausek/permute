@@ -53,8 +53,11 @@ def test_four_words():
     result = list(permute.create_generator())
     assert 64 == len(result)
 
+    # the permutation should only generate unique words
+    assert len(set(result)) == len(result)
 
-def test_min_argument():
+
+def test_min_filter():
     words = ["a", "b", "c"]
     permute = Permute(words, min_len=3)
 
@@ -63,7 +66,31 @@ def test_min_argument():
     assert 6 == len(list(permute.create_generator()))
 
 
+def test_max_filter():
+    words = ["a", "b", "c"]
+    permute = Permute(words, max_len=2)
+    assert 9 == len(list(permute.create_generator()))
+
+
+def test_min_max_filter():
+    words = ["a", "b", "c", "d"]
+    permute = Permute(words, min_len=2, max_len=3)
+    assert 36 == len(list(permute.create_generator()))
+
+
 def test_invalid_min_argument():
     with raises(Exception):
         words = ["a", "b", "c"]
-        permute = Permute(words, min_len=-1)
+        Permute(words, min_len=-1)
+
+
+def test_invalid_max_argument_negative():
+    with raises(Exception):
+        words = ["a", "b", "c"]
+        Permute(words, max_len=-1)
+
+
+def test_invalid_max_argument_zero():
+    with raises(Exception):
+        words = ["a", "b", "c"]
+        Permute(words, max_len=0)
