@@ -25,6 +25,17 @@ def test_amount_three_words():
     assert 15 == permute.amount()
 
 
+def test_amount_uppercase():
+    words = ["a", "b"]
+    permute = Permute(words, with_uppercase=True)
+    assert 64 == permute.amount()
+    result = list(permute.create_generator())
+    assert "aA" in result
+    assert "aa" not in result
+    assert "aB" in result
+    assert "ab" in result
+
+
 def test_only_unique_words_added():
     words = ["b", "b"]
     permute = Permute(words)

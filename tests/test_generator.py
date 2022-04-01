@@ -57,6 +57,16 @@ def test_four_words():
     assert len(set(result)) == len(result)
 
 
+"""
+TODO: make this test pass
+def test_output_small_permutations_first():
+    words = ["a", "b", "c", "d"]
+    permute = Permute(words)
+    result_len = list(map(len, permute.create_generator()))
+    assert sorted(result_len) == result_len
+"""
+
+
 def test_min_filter():
     words = ["a", "b", "c"]
     permute = Permute(words, min_len=3)
