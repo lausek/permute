@@ -1,4 +1,5 @@
 from permute import Permute
+from pytest import raises
 
 
 def test_one_word():
@@ -51,3 +52,18 @@ def test_four_words():
     assert 64 == permute.amount()
     result = list(permute.create_generator())
     assert 64 == len(result)
+
+
+def test_min_argument():
+    words = ["a", "b", "c"]
+    permute = Permute(words, min_len=3)
+
+    # this is still the same because filtering the permutations would add significant performance overhead
+    assert 15 == permute.amount()
+    assert 6 == len(list(permute.create_generator()))
+
+
+def test_invalid_min_argument():
+    with raises(Exception):
+        words = ["a", "b", "c"]
+        permute = Permute(words, min_len=-1)

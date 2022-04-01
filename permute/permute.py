@@ -36,11 +36,23 @@ def create_permutation(words: Set[str]) -> Generator[str, None, None]:
 
 
 class Permute:
-    def __init__(self, words: List[str]):
-        self.words: Set[str] = set(words)
+    def __init__(self, words: List[str], min_len: int = 0):
+        self.words = set(words)
+        self.min_len = min_len
+
+        if self.min_len < 0:
+            raise Exception(
+                f"invalid minimum length '{self.min_len}'. must be at least 0."
+            )
 
     def create_generator(self) -> Generator[str, None, None]:
-        return create_permutation(self.words)
+        for word in create_permutation(self.words):
+            word_n = len(word)
+
+            if word_n < self.min_len:
+                continue
+
+            yield word
 
     def amount(self) -> int:
         return permutation_amount(len(self.words))
