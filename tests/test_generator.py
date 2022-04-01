@@ -104,3 +104,34 @@ def test_invalid_max_argument_zero():
     with raises(Exception):
         words = ["a", "b", "c"]
         Permute(words, max_len=0)
+
+
+def test_uppercase():
+    words = ["aa", "bb"]
+    permute = Permute(words, with_uppercase=True)
+    assert 64 == permute.amount()
+    result = list(permute.create_generator())
+    assert "aaAA" in result
+    assert "aaaa" not in result
+    assert "aaBB" in result
+    assert "aabb" in result
+
+
+def test_lowercase():
+    words = ["AA", "BB"]
+    permute = Permute(words, with_lowercase=True)
+    assert 64 == permute.amount()
+    result = list(permute.create_generator())
+    assert "aaAA" in result
+    assert "aaaa" not in result
+    assert "aaBB" in result
+    assert "aabb" in result
+
+
+def test_capital():
+    words = ["aa", "bb"]
+    permute = Permute(words, with_capital=True)
+    assert 64 == permute.amount()
+    result = list(permute.create_generator())
+    assert "Aaaa" in result
+    assert "aaBb" in result

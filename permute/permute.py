@@ -41,13 +41,15 @@ class Permute:
         words: List[str],
         min_len: int = 0,
         max_len: Optional[int] = None,
-        with_uppercase: bool = False,
+        with_capital: bool = False,
         with_lowercase: bool = False,
+        with_uppercase: bool = False,
     ):
         self.words = set(words)
         self.min_len = min_len
         self.max_len = max_len
 
+        self.with_capital = with_capital
         self.with_lowercase = with_lowercase
         self.with_uppercase = with_uppercase
 
@@ -61,13 +63,17 @@ class Permute:
                 f"invalid maximum length '{self.max_len}'. must be at least 1."
             )
 
-        if self.with_uppercase:
-            uppercase_set = set([word.upper() for word in self.words])
-            self.words.update(uppercase_set)
+        if self.with_capital:
+            capital_set = set([word.title() for word in self.words])
+            self.words.update(capital_set)
 
         if self.with_lowercase:
             lowercase_set = set([word.lower() for word in self.words])
             self.words.update(lowercase_set)
+
+        if self.with_uppercase:
+            uppercase_set = set([word.upper() for word in self.words])
+            self.words.update(uppercase_set)
 
     def create_generator(self) -> Generator[str, None, None]:
         for word in create_permutation(self.words):
